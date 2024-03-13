@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1 class="mb-4">{{ cadastroConta ? "Acessar" : "Cadastrar" }} Conta</h1>
+    <h1 class="mb-4">{{ cadastroConta ? "Cadastrar" : "Acessar" }} Conta</h1>
     <BaseInputForm
       tituloLabel="E-mail"
       idInput="emailInput"
@@ -13,33 +13,7 @@
       tipoInput="password"
       v-model:valorInput="cadastro.senha"
     />
-
-    <div class="d-flex justify-content-center mb-3 gap-3">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value=""
-          id="flexCheckDefault"
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Default checkbox
-        </label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value=""
-          id="flexCheckDefault"
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Default checkbox
-        </label>
-      </div>
-    </div>
-
+    <BaseInputCheckbox :listaTiposAcessos="listaAcessos" v-if="cadastroConta" />
     <div
       class="d-flex flex-column justify-content-end"
       style="width: 200px; margin: 0 auto"
@@ -49,22 +23,25 @@
         type="button"
         @click="redirecionadorAcaoConta(cadastro.email, cadastro.senha)"
       >
-        {{ cadastroConta ? "Acessar" : "Cadastrar" }}
+        {{ cadastroConta ? "Cadastrar" : "Acessar" }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { defineProps, ref, onBeforeMount } from "vue";
 import BaseInputForm from "@/components/Compartilhado/BaseInputForm.vue";
-
-import { Login } from "@/models/Login/LoginModels";
+import BaseInputCheckbox from "@/components/Compartilhado/BaseInputCheckbox.vue";
+import { TipoUsuarioEnum } from "@/models/Login/LoginEnum";
+import { Login, ObjetoChaveValor } from "@/models/Login/LoginModels";
+import router from "@/router";
 
 let cadastro = ref<Login>({
   email: "",
   senha: "",
 });
+let listaAcessos: Array<ObjetoChaveValor> = [];
 
 const props = defineProps<{
   cadastroConta: boolean;
@@ -79,9 +56,35 @@ function redirecionadorAcaoConta(email: string, senha: string) {
 }
 function efetuarAcessoConta(email: string, senha: string) {
   console.log("acessar");
+  router.push("/blog");
 }
 
 function efetuarCadastroConta(email: string, senha: string) {
   console.log("Cadastrar conta");
+  let lista = listaAcessos.filter((v) => v.selecionado);
+
+  lista.forEach((element) => {
+    console.log(
+      `Teste para ver ${element.chave} || ${element.selecionado} || ${element.valor}`
+    );
+  });
 }
+
+function configuracaoListaAcesso() {
+  const keys = Object.keys(TipoUsuarioEnum).filter((v) => isNaN(Number(v)));
+
+  keys.forEach((key, index) => {
+    let acesso: ObjetoChaveValor = {
+      chave: key,
+      valor: index + 1,
+      selecionado: false,
+    };
+    listaAcessos.push(acesso);
+    console.log("Teste para ver lista de acesso", listaAcessos[index].chave);
+  });
+}
+
+onBeforeMount(() => {
+  configuracaoListaAcesso();
+});
 </script>

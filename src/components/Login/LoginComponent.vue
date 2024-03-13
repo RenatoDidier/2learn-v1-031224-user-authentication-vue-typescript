@@ -1,7 +1,7 @@
 <template>
   <LoginForms :cadastroConta="cadastroConta" />
   <a class="referencia-link" @click="cadastroConta = !cadastroConta">{{
-    cadastroConta ? "Cadastrar nova conta" : "Acessar conta"
+    cadastroConta ? "Acessar conta" : "Cadastrar nova conta"
   }}</a>
 </template>
 
@@ -9,7 +9,7 @@
 import { ref } from "vue";
 import LoginForms from "@/components/Login/LoginForms.vue";
 
-let cadastroConta = ref<boolean>(true);
+let cadastroConta = ref<boolean>(false);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
