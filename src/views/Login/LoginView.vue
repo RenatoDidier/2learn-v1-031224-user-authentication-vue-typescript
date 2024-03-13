@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" style="height: 80px" />
+    <img alt="Vue logo" src="../../assets/logo.png" style="height: 80px" />
     <LoginComponent />
   </div>
 </template>

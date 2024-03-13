@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-import LoginView from '@/views/LoginView.vue'
-import BlogView from '@/views/BlogView.vue'
+import LoginView from '@/views/Login/LoginView.vue'
+import BlogView from '@/views/Blog/BlogView.vue'
 
 import ConvidadoComponente from '@/components/Blog/ConvidadoComponente.vue'
 import UsuarioComponente from '@/components/Blog/UsuarioComponente.vue'
